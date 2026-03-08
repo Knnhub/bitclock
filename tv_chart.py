@@ -4,7 +4,7 @@ from lightweight_charts import Chart
 import history_manager # ✅ เรียกใช้งานตัวจัดการ CSV ของเรา
 
 def _run_tv_window(symbol, emas):
-    chart = Chart(toolbox=True, width=1000, height=600)
+    chart = Chart(toolbox=True, width=800, height=480)
     
     chart.layout(background_color='#141414', text_color='#FFFFFF')
     chart.candle_style(up_color='#00E676', down_color='#FF5252', wick_up_color='#00E676', wick_down_color='#FF5252')

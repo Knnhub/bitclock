@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import time
+import history_manager
 
 # ==========================================
 # 🛑 นำ API Key ของ CoinMarketCap มาใส่ตรงนี้
@@ -135,3 +136,49 @@ def get_coin_ohlc(symbol, interval='1m', limit=60):
         return df
     except Exception as e:
         return None
+
+def get_ema_values(symbol, emas):
+
+    df = history_manager.update_and_get_data(symbol, "1m")
+
+    if df is None or df.empty:
+        return None
+
+    price = df["close"].iloc[-1]
+
+    # กำหนดค่าเริ่มต้น
+    ema_short = None
+    ema_mid = None
+    ema_long = None
+
+    if len(emas) >= 1:
+        ema_short = df["close"].ewm(span=emas[0], adjust=False).mean().iloc[-1]
+
+    if len(emas) >= 2:
+        ema_mid = df["close"].ewm(span=emas[1], adjust=False).mean().iloc[-1]
+
+    if len(emas) >= 3:
+        ema_long = df["close"].ewm(span=emas[2], adjust=False).mean().iloc[-1]
+
+    # ===== PRINT STATUS =====
+    print(f"\n📊 {symbol}")
+    print(f"Price: {price:.4f}")
+
+    if ema_short:
+        status = "⬆️ Above" if price > ema_short else "⬇️ Below"
+        print(f"EMA{emas[0]}: {ema_short:.4f} ({status})")
+
+    if ema_mid:
+        status = "⬆️ Above" if price > ema_mid else "⬇️ Below"
+        print(f"EMA{emas[1]}: {ema_mid:.4f} ({status})")
+
+    if ema_long:
+        status = "⬆️ Above" if price > ema_long else "⬇️ Below"
+        print(f"EMA{emas[2]}: {ema_long:.4f} ({status})")
+
+    return {
+        "short": ema_short,
+        "mid": ema_mid,
+        "long": ema_long,
+        "price": price
+    }
