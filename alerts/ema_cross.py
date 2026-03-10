@@ -41,7 +41,7 @@ def check_ema_cross(symbol, ema_values):
     ema_long = ema_values.get("long")
 
     # short vs mid
-    if ema_short and ema_mid:
+    if ema_short is not None and ema_mid is not None:
         cross = detect_cross(symbol, "short_mid", ema_short, ema_mid)
         if cross:
             signals.append({
@@ -50,7 +50,7 @@ def check_ema_cross(symbol, ema_values):
             })
 
     # mid vs long
-    if ema_mid and ema_long:
+    if ema_mid is not None and ema_long is not None:
         cross = detect_cross(symbol, "mid_long", ema_mid, ema_long)
         if cross:
             signals.append({
@@ -59,7 +59,7 @@ def check_ema_cross(symbol, ema_values):
             })
 
     # short vs long
-    if ema_short and ema_long:
+    if ema_short is not None and ema_long is not None:
         cross = detect_cross(symbol, "short_long", ema_short, ema_long)
         if cross:
             signals.append({
