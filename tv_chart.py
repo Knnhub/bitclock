@@ -1,9 +1,10 @@
 import multiprocessing
 import pandas as pd
-from lightweight_charts import Chart
+
 import history_manager # ✅ เรียกใช้งานตัวจัดการ CSV ของเรา
 
 def _run_tv_window(symbol, emas):
+    from lightweight_charts import Chart
     chart = Chart(toolbox=True, width=800, height=480)
     
     chart.layout(background_color='#141414', text_color='#FFFFFF')
