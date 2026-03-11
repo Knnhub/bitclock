@@ -5,6 +5,7 @@ from PIL import ImageTk
 import api
 import dashboard_ui
 import tv_chart
+import multiprocessing
 
 # ส่วนของการจัดการข้อมูลและการแจ้งเตือน
 from alerts.ema_cross import check_ema_cross
@@ -184,7 +185,7 @@ class CryptoApp(tk.Tk):
 
         btn_tv = tk.Button(
             self,
-            text="📊 เปิดกราฟ TradingView",
+            text="📊 Open Chart",
             font=('Arial', 12, 'bold'),
             bg='#29B6F6',
             fg='black',
@@ -243,11 +244,11 @@ class CryptoApp(tk.Tk):
                     else:
                         msg = f"📉 EMA Bearish Cross\n{symbol}\nType: {signal_type}\nPrice: {price}"
 
-                    send_email(
-                        "BitClock EMA Alert",
-                        msg,
-                        "phoophachanthayung@gmail.com"
-                    )
+                    # send_email(
+                    #     "BitClock EMA Alert",
+                    #     msg,
+                    #     "phoophachanthayung@gmail.com"
+                    # )
 
                     print(msg)
 

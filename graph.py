@@ -16,14 +16,17 @@ def create_candlestick_widget(parent, df, coin_name, is_fullscreen=False):
         gridcolor='#323232',
         rc={'text.color': 'white', 'axes.labelcolor': 'white', 'xtick.color': 'white', 'ytick.color': 'white'}
     )
-    
+
     fig, ax = plt.subplots(figsize=figsize)
     fig.patch.set_facecolor('#141414')
+
     
     if df is not None and not df.empty:
-        mpf.plot(df, ax=ax, type='candle', style=s,
-                 axtitle=f'{coin_name}/USDT Real-time', ylabel='Price (USDT)')
+        # ✅ ใหม่: เลือก type ตาม chart_type ที่รับเข้ามา ('candle' หรือ 'line')
+        mpf.plot(df, ax=ax, type=chart_type, style=s,
+                 axtitle=f'{coin_name}/USDT', ylabel='Price (USDT)')
     else:
+        ax.set_facecolor('#141414')
         ax.set_title("กำลังโหลดข้อมูล...", color='white')
         
     canvas = FigureCanvasTkAgg(fig, master=parent)
